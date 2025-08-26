@@ -206,51 +206,55 @@ pie title Platform Limitations (Design Considerations)
 
 ---
 
-## 2. Use Case #1 — MCP Brokerage (Model Context Protocol)
+## 2. Use Case #1 — MCP Server Brokerage (Model Context Protocol)
 
 ### Strategic Answer
 
-**Problem:** Organizations struggle with fragmented AI tooling, inconsistent model access patterns, and lack of centralized governance across diverse AI/ML platforms and models.
+**Problem:** Organizations need to provide AI systems with access to diverse tools, data sources, and enterprise resources, but managing connections to multiple MCP servers creates complexity, security risks, and governance challenges.
 
-**Solution:** Ansible serves as the **unified orchestration layer** that brokers access, enforces policies, and manages the lifecycle of AI model interactions across heterogeneous environments.
+**Solution:** Ansible serves as the **unified orchestration layer** that brokers access to MCP servers, enforces policies, and manages the lifecycle of tool and resource integrations across heterogeneous environments.
 
 ### Supporting Arguments
 
-1. **Centralized Model Governance**: Single point for access control, usage policies, and compliance across all AI models
-2. **Cross-Platform Integration**: Unified interface to OpenAI, Claude, local models, and enterprise AI platforms  
-3. **Policy Enforcement**: Consistent security, data governance, and usage controls regardless of model provider
-4. **Resource Optimization**: Intelligent routing, load balancing, and cost management across model endpoints
+1. **Centralized MCP Server Governance**: Single point for access control, usage policies, and compliance across all MCP server connections
+2. **Cross-Platform Integration**: Unified interface to GitHub MCP servers, database connectors, file systems, APIs, and enterprise tools  
+3. **Policy Enforcement**: Consistent security, data governance, and usage controls for all MCP server interactions
+4. **Resource Optimization**: Intelligent routing, connection pooling, and resource management across MCP server endpoints
 
-### MCP Orchestration Architecture
+### MCP Server Orchestration Architecture
 
 ```mermaid
 graph TB
-    subgraph "Enterprise AI Consumers"
-        Apps[Applications<br/>• Chatbots<br/>• Analytics<br/>• Code Generation]
+    subgraph "Enterprise AI Systems"
+        Apps[AI Applications<br/>• Chatbots<br/>• Analytics<br/>• Code Generation]
         DevTools[Developer Tools<br/>• IDEs<br/>• CI/CD Pipelines<br/>• Testing Frameworks]
         BizProc[Business Processes<br/>• Content Generation<br/>• Data Analysis<br/>• Decision Support]
     end
 
-    subgraph "Ansible MCP Broker Layer"
-        MCPBroker[MCP Broker Controller<br/>• Request Routing<br/>• Policy Enforcement<br/>• Usage Tracking<br/>• Cost Management]
+    subgraph "Ansible MCP Server Broker Layer"
+        MCPBroker[MCP Server Broker Controller<br/>• Connection Routing<br/>• Policy Enforcement<br/>• Usage Tracking<br/>• Resource Management]
         
         subgraph "Policy & Governance"
             PolicyEngine[Policy Engine<br/>• Access Control<br/>• Data Classification<br/>• Usage Quotas<br/>• Compliance Rules]
-            AuditLog[Audit & Logging<br/>• Request Tracking<br/>• Performance Metrics<br/>• Security Events]
+            AuditLog[Audit & Logging<br/>• Tool Usage Tracking<br/>• Performance Metrics<br/>• Security Events]
         end
     end
 
-    subgraph "AI Model Providers"
-        subgraph "Cloud AI Services"
-            OpenAI[OpenAI<br/>GPT-4, GPT-3.5<br/>DALL-E, Whisper]
-            Anthropic[Anthropic<br/>Claude 3<br/>Claude Instant]
-            Azure[Azure OpenAI<br/>GPT-4, GPT-3.5<br/>Azure Cognitive Services]
-            GCP[Google Cloud AI<br/>Vertex AI<br/>PaLM, Bard]
+    subgraph "MCP Server Ecosystem"
+        subgraph "Development & Code MCP Servers"
+            GitHub[GitHub MCP Server<br/>• Repository Management<br/>• Issue Tracking<br/>• Code Reviews<br/>• CI/CD Integration]
+            GitLab[GitLab MCP Server<br/>• Project Management<br/>• Merge Requests<br/>• Pipeline Control]
         end
         
-        subgraph "On-Premises Models"
-            LocalLLM[Local LLMs<br/>• Ollama<br/>• LM Studio<br/>• Hugging Face]
-            Enterprise[Enterprise Platforms<br/>• SageMaker<br/>• MLflow<br/>• Custom Endpoints]
+        subgraph "Data & Enterprise MCP Servers"
+            Database[Database MCP Server<br/>• SQL Queries<br/>• Schema Management<br/>• Data Access Control]
+            FileSystem[File System MCP Server<br/>• File Operations<br/>• Directory Management<br/>• Content Search]
+            ITSM[ITSM MCP Server<br/>• ServiceNow<br/>• Jira Integration<br/>• Ticket Management]
+        end
+        
+        subgraph "Cloud & Infrastructure MCP Servers"
+            AWS[AWS MCP Server<br/>• Resource Management<br/>• Service Control<br/>• Cost Monitoring]
+            K8s[Kubernetes MCP Server<br/>• Cluster Management<br/>• Pod Operations<br/>• Service Discovery]
         end
     end
 
@@ -261,22 +265,23 @@ graph TB
     MCPBroker --> PolicyEngine
     MCPBroker --> AuditLog
     
-    MCPBroker --> OpenAI
-    MCPBroker --> Anthropic
-    MCPBroker --> Azure
-    MCPBroker --> GCP
-    MCPBroker --> LocalLLM
-    MCPBroker --> Enterprise
+    MCPBroker --> GitHub
+    MCPBroker --> GitLab
+    MCPBroker --> Database
+    MCPBroker --> FileSystem
+    MCPBroker --> ITSM
+    MCPBroker --> AWS
+    MCPBroker --> K8s
 
     classDef consumer fill:#e3f2fd,stroke:#1976d2,color:#000
     classDef broker fill:#e8f5e8,stroke:#388e3c,color:#000
     classDef policy fill:#fff3e0,stroke:#f57c00,color:#000
-    classDef provider fill:#fce4ec,stroke:#c2185b,color:#000
+    classDef server fill:#fce4ec,stroke:#c2185b,color:#000
     
     class Apps,DevTools,BizProc consumer
     class MCPBroker broker
     class PolicyEngine,AuditLog policy
-    class OpenAI,Anthropic,Azure,GCP,LocalLLM,Enterprise provider
+    class GitHub,GitLab,Database,FileSystem,ITSM,AWS,K8s server
 ```
 
 ### Request Flow with Policy Enforcement
@@ -284,13 +289,13 @@ graph TB
 ```mermaid
 sequenceDiagram
     participant Client as AI Client Application
-    participant Broker as MCP Broker (Ansible)
+    participant Broker as MCP Server Broker (Ansible)
     participant Policy as Policy Engine
     participant Monitor as Monitoring & Audit
-    participant Provider as AI Model Provider
+    participant MCPServer as MCP Server
     participant Cache as Response Cache
 
-    Client->>+Broker: AI Request (with context & metadata)
+    Client->>+Broker: Tool/Resource Request (with context & metadata)
     Broker->>+Policy: Validate Request (user, intent, data classification)
     
     alt Policy Approved
@@ -300,14 +305,14 @@ sequenceDiagram
         alt Cache Hit
             Cache-->>Broker: ✅ Cached Response
         else Cache Miss
-            Broker->>+Provider: Forward Request (with enhanced context)
-            Provider-->>-Broker: AI Response
+            Broker->>+MCPServer: Forward Request (with enhanced context)
+            MCPServer-->>-Broker: Tool/Resource Response
             Broker->>Cache: Store Response (if cacheable)
         end
         
         Broker->>+Monitor: Log Success (usage, performance, cost)
         Monitor-->>-Broker: Logged
-        Broker-->>-Client: AI Response (with metadata)
+        Broker-->>-Client: Tool/Resource Response (with metadata)
         
     else Policy Denied
         Policy-->>Broker: ❌ Denied (reason, alternatives)
@@ -316,8 +321,8 @@ sequenceDiagram
         Broker-->>-Client: Policy Violation (with guidance)
     end
 
-    Note over Client,Provider: All interactions audited and governed
-    Note over Broker,Policy: Dynamic routing based on model availability, cost, performance
+    Note over Client,MCPServer: All interactions audited and governed
+    Note over Broker,Policy: Dynamic routing based on server availability, load, performance
 ```
 
 ### Implementation Benefits
