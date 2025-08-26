@@ -33,7 +33,7 @@ graph TB
     subgraph "Strategic AI Control Platform"
         Control[Ansible<br/>AI Control Platform]
         
-        Control --> Brokerage[AI Model Brokerage<br/>🎯 Unified AI Access<br/>📊 Usage Control<br/>💰 Cost Management]
+        Control --> Brokerage[MCP Server Brokerage<br/>🎯 Unified Tool Access<br/>📊 Usage Control<br/>💰 Resource Management]
         Control --> Operations[Intelligent Operations<br/>🤖 AI-Powered IT Ops<br/>⚡ Automated Response<br/>🔍 Predictive Analysis]
         Control --> Infrastructure[Secure Infrastructure<br/>🛡️ Hardened Systems<br/>📋 Compliance Automation<br/>⚙️ GPU-Optimized]
         Control --> Lifecycle[AI Lifecycle Management<br/>🔄 End-to-End MLOps<br/>✅ Quality Assurance<br/>📈 Performance Tracking]
@@ -48,51 +48,51 @@ graph TB
 
 ---
 
-## Strategic Capability #1: AI Model Brokerage
+## Strategic Capability #1: MCP Server Brokerage
 
 ### The Strategic Value
 
-**Answer:** Centralized control and governance over all AI model access across the enterprise.
+**Answer:** Centralized control and governance over all MCP server connections providing tools and resources to AI systems across the enterprise.
 
 **Business Problem Solved:**
-- Eliminate shadow AI usage and security risks
-- Optimize AI spending through centralized management
-- Ensure consistent policies across all AI interactions
+- Eliminate fragmented tool access and security risks
+- Optimize resource utilization through centralized management
+- Ensure consistent policies across all MCP server interactions
 
 ```mermaid
 flowchart LR
-    subgraph "Current State: Fragmented AI"
-        App1[App A] --> OpenAI1[OpenAI Direct]
-        App2[App B] --> Claude1[Claude Direct] 
-        App3[App C] --> Local1[Local Models]
-        Dev[Developers] --> Multiple[Multiple APIs]
+    subgraph "Current State: Fragmented Tool Access"
+        App1[App A] --> GitHub1[GitHub Direct]
+        App2[App B] --> DB1[Database Direct] 
+        App3[App C] --> File1[File System Direct]
+        Dev[Developers] --> Multiple[Multiple Tool APIs]
     end
     
-    subgraph "Future State: Controlled AI"
-        AppA[Application A] --> Broker[Ansible AI Broker]
+    subgraph "Future State: Controlled Tool Access"
+        AppA[Application A] --> Broker[Ansible MCP Broker]
         AppB[Application B] --> Broker
         AppC[Application C] --> Broker
         DevTeam[Development Teams] --> Broker
         
-        Broker --> OpenAI2[OpenAI]
-        Broker --> Claude2[Claude]
-        Broker --> Local2[Local Models]
-        Broker --> Enterprise[Enterprise AI]
+        Broker --> GitHub2[GitHub MCP Server]
+        Broker --> DB2[Database MCP Server]
+        Broker --> File2[File System MCP Server]
+        Broker --> Enterprise[Enterprise MCP Servers]
     end
     
     classDef current fill:#ffebee,stroke:#c62828,color:#000
     classDef future fill:#e8f5e8,stroke:#2e7d32,color:#000
     classDef broker fill:#0b7285,stroke:#034a57,color:#fff
     
-    class App1,App2,App3,Dev,OpenAI1,Claude1,Local1,Multiple current
-    class AppA,AppB,AppC,DevTeam,OpenAI2,Claude2,Local2,Enterprise future
+    class App1,App2,App3,Dev,GitHub1,DB1,File1,Multiple current
+    class AppA,AppB,AppC,DevTeam,GitHub2,DB2,File2,Enterprise future
     class Broker broker
 ```
 
 **Strategic Outcomes:**
-- **Cost Control:** 40% reduction in AI spending through optimization
-- **Security:** 100% visibility and control over AI model usage
-- **Compliance:** Automated policy enforcement across all AI interactions
+- **Cost Control:** 40% reduction in tool access costs through optimization
+- **Security:** 100% visibility and control over MCP server tool usage
+- **Compliance:** Automated policy enforcement across all MCP server interactions
 
 ---
 
