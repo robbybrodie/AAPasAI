@@ -310,7 +310,7 @@ sequenceDiagram
         Broker-->>-Client: AI Response (with metadata)
         
     else Policy Denied
-        Policy-->>-Broker: ❌ Denied (reason, alternatives)
+        Policy-->>Broker: ❌ Denied (reason, alternatives)
         Broker->>+Monitor: Log Denial (security event)
         Monitor-->>-Broker: Logged
         Broker-->>-Client: Policy Violation (with guidance)
